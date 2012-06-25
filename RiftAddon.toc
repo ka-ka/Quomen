@@ -18,11 +18,15 @@ Author = "OKeez"
 Website = "http://okeez.com"
 
 -- You may want to include a version string for your addon as well.
-Version = "1.0.0"
+Version = "1.0.2"
 
 Email = "bob@okeez.com"
 
-Environment = "1.5"
+Environment = "1.7"
+
+SavedVariables = {
+   Quomen = "account",
+}
 
 RunOnStartup = {
   "main.lua",

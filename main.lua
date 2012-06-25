@@ -3,11 +3,14 @@
 	Version: 1.0
 	Author: OKeez
 ]] 
+Quomen = Quomen or {}
+Quomen.active = Quomen.active or true
 
 local context = UI.CreateContext("Context")
 local gaw = 1
 local skillName = "Quantum/Omen Sight";
-local active = false
+local searchForSkillName = true;
+local foundSkillName = false;
 
 MsgFrame = UI.CreateFrame("Frame","MsgFrame", context)
 MsgFrame.text = UI.CreateFrame("Text", "Text", MsgFrame)
@@ -23,12 +26,12 @@ MsgFrame.text:SetAlpha(80)
 print("Quantum/Omen Sight Monitor. \nType /quomen help for options.")
 
 local function on()
-	active = true
+	Quomen.active = true
 	print(skillName .. " monitoring enabled.")
 end
 
 local function off()
-	active = false
+	Quomen.active = false
 	print(skillName .. " monitoring disabled.")
 	MsgFrame.text:SetVisible(false)
 	MsgFrame.texture:SetVisible(false)
@@ -51,8 +54,29 @@ local function clear()
 	MsgFrame.texture:SetVisible(false)
 end
 
+local function findSkillName()
+       local list = Inspect.Ability.List()
+       if not list then return end
+ 
+       local details = Inspect.Ability.Detail(list)
+       for id, ability in pairs(details) do
+              --print(ability.name)
+              if ability.name == "Quantum Sight" or
+                 ability.name == "Omen Sight" then
+                      skillName = ability.name
+                      --print("found "..ability.name)
+                      foundSkillName = true;
+                      MsgFrame.text:SetText("Your " .. skillName .. " has expired")
+              end
+       end
+       searchForSkillName = false;
+end
+
 local function refresh()
-	if (active == true) then
+        if (searchForSkillName) then
+           findSkillName()
+        end
+	if (Quomen.active == true and foundSkillName) then
 	gaw = gaw -1
 	if gaw < 0 then
 		local blt = Inspect.Buff.List("player")
@@ -98,8 +122,8 @@ local function process(param)
       end 
       
       if(param == "switch") then 
-          active = not active
-          if(active) then 
+          Quomen.active = not Quomen.active
+          if(Quomen.active) then 
              on() 
           else 
              off() 
@@ -118,4 +142,3 @@ end;
 
 table.insert(Event.System.Update.Begin, {refresh, "Quomen", "refresh"})
 table.insert(Command.Slash.Register("quomen"), {function (params) process(params) end, "Quomen", "Slash command"})
-
