@@ -1,0 +1,30 @@
+Identifier = "Quomen"
+
+Name = {
+  English = "Quomen - Quantum/Omen Sight Monitor",
+  French = "Quomen - Quantum/Omen Sight Monitor",
+  German = "Quomen - Quantum/Omen Sight Monitor",
+}
+
+NameShort = "Quomen"
+
+Description = {
+  English = "Quantum/Omen Sight monitor for Artifact Hunters.",
+  French = "Quantum/Omen Sight monitor for Artifact Hunters.",
+  German = "Quantum/Omen Sight monitor for Artifact Hunters.",
+}
+
+Author = "OKeez"
+Website = "http://okeez.com"
+
+-- You may want to include a version string for your addon as well.
+Version = "1.0.0"
+
+Email = "bob@okeez.com"
+
+Environment = "1.5"
+
+RunOnStartup = {
+  "main.lua",
+}
+
